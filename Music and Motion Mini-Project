@@ -1,0 +1,73 @@
+// this idea is from https://youtu.be/17WoOqgXsRM
+function Star() {
+  this.x = random(-width, width);
+  this.y = random(-height, height);
+  this.z = random(width);
+
+
+  this.update = function() {
+    this.y = this.y - speed;
+    if (this.y < 1) {
+      this.z = random(-width, width);
+      this.x = random(-width, width);
+      this.y = height;
+    }
+  }
+
+  this.show = function() {
+    fill(255);
+    noStroke();
+
+    var sx = map(this.x / this.z, 0, 1, 0, width);
+    var sy = map(this.y / this.z, 0, 1, 0, height);
+
+    var r = map(this.z, 0, width, 16, 0);
+    ellipse(sx, sy, r, r);
+
+
+    stroke(255);
+
+  }
+}
+
+var stars = [];
+
+var speed;
+var song;
+
+function preload() {
+  soundFormats('wav', 'ogg');
+  song = loadSound('star.wav');
+}
+
+function setup() {
+  createCanvas(600, 600);
+  for (var i = 0; i < 900; i++) {
+    stars[i] = new Star();
+    song.play();
+  }
+}
+
+function draw() {
+  speed = map(mouseX, 0, width, 0, 10);
+  value = map(mouseX, 0, width, 0, 0.4)
+  background(0);
+  for (var i = 0; i < stars.length; i++) {
+    stars[i].update();
+    stars[i].show();
+    song.setVolume(value);
+  }
+
+  //   if (mouseY >= height/2) {
+  //       if (tripped == false) {
+  //           song.play();
+  //           tripped = true;
+  //       }
+  //   }
+
+  //   // if invisible for a full “height” amount…
+  //   if (mouseY < height/2) {
+  //     splash.stop();
+  //     tripped = false;
+  //   }
+}
