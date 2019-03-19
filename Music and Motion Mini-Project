@@ -1,4 +1,5 @@
-// this idea is from https://youtu.be/17WoOqgXsRM
+// this idea is based on https://youtu.be/17WoOqgXsRM
+
 function Star() {
   this.x = random(-width, width);
   this.y = random(-height, height);
@@ -44,7 +45,6 @@ function setup() {
   createCanvas(600, 600);
   for (var i = 0; i < 900; i++) {
     stars[i] = new Star();
-    song.play();
   }
 }
 
@@ -58,16 +58,15 @@ function draw() {
     song.setVolume(value);
   }
 
-  //   if (mouseY >= height/2) {
-  //       if (tripped == false) {
-  //           song.play();
-  //           tripped = true;
-  //       }
-  //   }
+    if (mouseY >= height/2) {
+        if (tripped == false) {
+            song.play();
+            tripped = true;
+        }
+    }
 
-  //   // if invisible for a full “height” amount…
-  //   if (mouseY < height/2) {
-  //     splash.stop();
-  //     tripped = false;
-  //   }
+    if (mouseY < height/4) {
+      song.stop();
+      tripped = false;
+    }
 }
